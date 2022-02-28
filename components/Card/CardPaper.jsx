@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const isHexColor = (hex) => hex?.match(/^#(?:[0-9a-fA-F]{3}){1,2}$/)
+import { isHexColor } from "@/components/utils/colorInput";
 
 const CardPaper = styled.div`
   position: relative;

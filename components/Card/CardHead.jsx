@@ -12,7 +12,7 @@ const CardHeadIcon = styled.div`
 
 const CardHeadTitle = styled.div`
   flex: 3 2 70%;
-  margin-left: auto;
+  margin-right: auto;
 `;
 
 function CardHead({ children, ...props }) {
