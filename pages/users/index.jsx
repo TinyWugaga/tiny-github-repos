@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 import { CardPaper, CardHead, CardContent } from "@/components/Card";
+import List from "@/components/List";
 
 function Users({ usernames }) {
   const router = useRouter();
@@ -10,18 +10,17 @@ function Users({ usernames }) {
     return <div>Loading...</div>;
   }
 
+  const data = usernames.map(username =>({
+    title: username,
+    link: `/users/${username}/repos`,
+  }))
+
   return (
     <div>
       <CardPaper variant="round">
         <CardHead title="Users" />
         <CardContent>
-          {(usernames || []).map((username, index) => (
-            <div key={index}>
-              <Link href={`/users/${username}/repo`}>
-                <a>{username}</a>
-              </Link>
-            </div>
-          ))}
+          <List data={data} />
         </CardContent>
       </CardPaper>
     </div>
