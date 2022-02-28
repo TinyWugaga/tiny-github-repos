@@ -14,7 +14,9 @@
     "swr": "^1.2.2"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^2.0.6",
     "eslint": "8.9.0",
-    "eslint-config-next": "12.0.10"
+    "eslint-config-next": "12.0.10",
+    "styled-components": "^5.3.3"
   }
 }
