@@ -1,10 +1,18 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
 
 const fetcher = url => fetch(url).then(res => res.json());
 const PAGE_SIZE = 10;
 
-function Repo({ username }) {
+function Repos({ username }) {
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
+    index =>
+      `https://api.github.com/users/${username}/repos?per_page=${PAGE_SIZE}&page=${index +
+        1}`,
+    fetcher
+  );
+
   const router = useRouter();
 
   // If the page is not yet generated, this will be displayed
@@ -12,13 +20,6 @@ function Repo({ username }) {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-
-  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
-    index =>
-      `https://api.github.com/users/${username}/repos?per_page=${PAGE_SIZE}&page=${index +
-        1}`,
-    fetcher
-  );
 
   const repos = data ? [].concat(...data) : [];
   const isLoadingInitialData = !data && !error;
@@ -36,7 +37,16 @@ function Repo({ username }) {
       {repos.map(repo => {
         return (
           <p key={repo.id} style={{ margin: "6px 0" }}>
-            - {repo.name}
+            <Link href={`/users/${username}/repos/${repo.name}`}>
+              <a>
+                <span>
+                  - {repo.name}
+                </span>
+                <span>
+                  - {repo.stargazers_count}
+                </span>
+              </a>
+            </Link>
           </p>
         );
       })}
@@ -82,4 +92,4 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export default Repo;
+export default Repos;

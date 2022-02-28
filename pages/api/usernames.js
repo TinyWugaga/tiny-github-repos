@@ -5,7 +5,8 @@ export default function handler(req, res) {
       'GitHub',
       'Vercel',
       'Octokit',
-      'Notion'
+      'Notion',
+      'Meta'
     ]
   })
 }
