@@ -4,6 +4,21 @@ import { isHexColor } from "@/components/utils/colorInput";
 
 const CardPaper = styled.div`
   position: relative;
+  width: fit-content;
+  height: auto;
+  min-width: 540px;
+  max-width: 90%;
+  max-Height: 792px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+
+  border: 1.6px solid #9F9F9F;
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.05);
+
   ${({ variant }) => {
     switch (variant) {
       case "round":
