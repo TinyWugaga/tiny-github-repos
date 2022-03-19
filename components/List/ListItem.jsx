@@ -1,53 +1,148 @@
-import styled from "styled-components";
 import Link from "next/link";
+import styled from "styled-components";
+
+import { darkenColor, lightenColor } from "@/styles/utils/colorInput";
+import buttonCss from "@/styles/commonStyle/button";
+import * as Logo from "@/components/Layout/Logo";
 
 const ListItemContainer = styled.div`
-  position: relative;
+  display: flex;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+
   width: 100%;
-  height: auto;
-  padding: 8px 16px;
+  border-bottom: 1px solid ${({ theme }) => darkenColor(theme.palette.gray, 20)};
+`;
+
+const ListItemBlock = styled.div`
+  display: inline-block;
+`;
+const ListItemBlockLeft = styled(ListItemBlock)`
+  width: 74.99999997%;
+`;
+const ListItemBlockRight = styled(ListItemBlock)`
+  width: 24.99999999%;
 
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  &:not(:last-child) {
-    border-bottom: 1.2px solid #9f9f9f;
-  }
+  justify-content: space-around;
+  flex-direction: column;
 `;
 
-const ListItemImage = styled.div`
-  flex: 1 1 15%;
+const ListItemBlockContainer = styled.div`
+  display: flex;
+  float: right;
 
-  margin-right: 1.8rem;
+  vertical-align: middle;
 `;
 
-const ListItemTitle = styled.div`
-  flex: 3 2 70%;
-  margin-right: auto;
-
-  font-family: Monaco;
-
-  font-size: 1.2rem;
-  line-height: 1.6;
-
-  color: #ffffff;
+const ListItemTitle = styled.h3`
+  display: inline-block;
+  margin-bottom: 4px;
+`;
+const ListItemTitleText = styled.a`
+  display: inline-block;
+  margin-bottom: 4px;
+`;
+const ListItemSubTitleText = styled.p`
+  display: inline-block;
+  margin-bottom: 8px;
+  padding-right: 24px;
+  color: ${({ theme }) => darkenColor(theme.palette.gray, 10)};
 `;
 
-const ListItem = ({ image, title, link }) => {
+const ListItemAttachment = styled.div`
+  margin-top: 8px;
+  color: ${({ theme }) => darkenColor(theme.palette.gray, 5)};
+`;
+const ListItemAttachmentWrapper = styled.span`
+  margin-left: 0;
+  margin-right: 16px;
+
+`;
+const ListItemAttachmentIcon = styled(Logo.StarFilled)`
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+`;
+const ListItemAttachmentText = styled.span`
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 14px;
+  vertical-align: middle;
+`;
+
+const ListItemButton = styled.button`
+  ${buttonCss}
+
+  position: relative;
+  height: auto;
+  float: left;
+
+  font-size: 12px;
+  line-height: 20px;
+
+  color: ${({ theme }) => theme.typography.color.light};
+  background-color: ${({ theme }) => lightenColor(theme.palette.background, 5)};
+  border-color: ${({ theme }) => darkenColor(theme.palette.gray, 10)};
+  box-shadow: 0 0 transparent, 0 0 transparent;
+  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  transition-property: color, background-color, border-color;
+`;
+
+const ListItemButtonText = styled.span`
+  display: inline-block;
+  max-width: 125px;
+  vertical-align: top;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
+const LikeIcon = styled(Logo.LoveLine)`
+  margin-right: 4px;
+  color: ${({ theme }) => theme.typography.color.light};
+  vertical-align: text-bottom;
+
+  display: inline-block;
+  overflow: visible;
+  fill: currentColor;
+
+  width: 16px;
+  height: 16px;
+`
+
+const ListItem = ({ data }) => {
+  const { title, subtitle, attachment, link } = data;
   return (
     <ListItemContainer>
-      {image && <ListItemImage image={image} />}
-      <ListItemTitle>
-        {link ? (
-          <Link href={link}>
-            <a>{title}</a>
+      <ListItemBlockLeft>
+        <ListItemTitle>
+          <Link href={link} passHref>
+            <ListItemTitleText>{title}</ListItemTitleText>
           </Link>
-        ) : (
-          title
-        )}
-      </ListItemTitle>
+        </ListItemTitle>
+        <div>
+          <ListItemSubTitleText>{subtitle}</ListItemSubTitleText>
+        </div>
+        <ListItemAttachment>
+          <ListItemAttachmentWrapper>
+            <ListItemAttachmentIcon />
+            <ListItemAttachmentText>{attachment}</ListItemAttachmentText>
+          </ListItemAttachmentWrapper>
+        </ListItemAttachment>
+      </ListItemBlockLeft>
+      <ListItemBlockRight>
+        <ListItemBlockContainer>
+          <ListItemButton>
+            <LikeIcon viewBox="0 -6 24 24" />
+            <ListItemButtonText>{"Like"}</ListItemButtonText>
+          </ListItemButton>
+        </ListItemBlockContainer>
+      </ListItemBlockRight>
     </ListItemContainer>
   );
 };
