@@ -8,15 +8,20 @@
       "@/pages/*": [
         "pages/*"
       ],
+      "@/api/*": [
+        "pages/api/*"
+      ],
       "@/components/*": [
         "components/*"
       ],
       "@/styles/*": [
         "styles/*"
       ],
-      "@/api/*": [
-        "pages/api/*"
+      "@/lib/*": [
+        "lib/*"
       ]
     }
-  }
+  },
+  "include": ["."],
+  "exclude": ["./node_modules", "./assets"]
 }
