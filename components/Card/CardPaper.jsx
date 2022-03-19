@@ -1,38 +1,29 @@
 import styled from "styled-components";
 
-import { isHexColor } from "@/components/utils/colorInput";
+import { isHexColor } from "@/styles/utils/colorInput";
+import { darkenColor } from "@/styles/utils/colorInput";
 
 const CardPaper = styled.div`
-  position: relative;
-  width: fit-content;
-  height: auto;
-  min-width: 540px;
-  max-width: 90%;
-  max-Height: 792px;
+  margin-bottom: 16px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-
-  border: 1.6px solid #9F9F9F;
-  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.05);
+  border-color: ${({ theme }) => darkenColor(theme.palette.gray, 10)};
+  border-style: solid;
+  border-width: 1px;
 
   ${({ variant }) => {
     switch (variant) {
       case "round":
-        return "border-radius: 15px;";
+        return "border-radius: 6px;";
     }
   }}
-  background: ${({ bgcolor }) => isHexColor(bgcolor) ? bgcolor : CardPaper.defaultProps.bgcolor};
-  color: ${({ color }) => isHexColor(color) ? color : CardPaper.defaultProps.color};
+  background: ${({ theme, bgcolor }) =>
+    isHexColor(bgcolor) ? bgcolor : theme.palette.background};
+  color: ${({ theme, color }) =>
+    isHexColor(color) ? color : theme.typography.color.light};
 `;
 
 CardPaper.defaultProps = {
-  variant: "round",
-  bgcolor: "#0D0D0D",
-  color: "#FFFFFF",
-}
+  variant: "round"
+};
 
 export default CardPaper;
