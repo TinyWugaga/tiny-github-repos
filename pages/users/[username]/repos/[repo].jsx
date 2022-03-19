@@ -1,76 +1,45 @@
 import { useRouter } from "next/router";
-import useSWRInfinite from "swr/infinite";
+import useSWR from "swr";
 
-const fetcher = url => fetch(url).then(res => res.json());
-const PAGE_SIZE = 10;
+import { ProfileLayout } from "@/components/Layout";
+import { CardPaper, CardHeader, CardContent } from "@/components/Card";
+import RepoArticle from "@/components/RepoArticle";
 
-function Repo({ username }) {
-  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
-    index =>
-      `https://api.github.com/users/${username}/repos?per_page=${PAGE_SIZE}&page=${index +
-        1}`,
-    fetcher
-  );
-
+function Repo({ username, repo, ...props }) {
   const router = useRouter();
 
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
+  const { data: repoData, error } = useSWR(
+    !router.isFallback
+      ? `https://api.github.com/repos/${username}/${repo}`
+      : null
+  );
 
-  const repos = data ? [].concat(...data) : [];
-  const isLoadingInitialData = !data && !error;
-  const isLoadingMore =
-    isLoadingInitialData ||
-    (size > 0 && data && typeof data[size - 1] === "undefined");
-  const isEmpty = data?.[0]?.length === 0;
-  const isReachingEnd =
-    isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
-  const isRefreshing = isValidating && data && data.length === size;
+  if (error) return "An error has occurred.";
 
   return (
-    <div>
-      {isEmpty && <p>Yay, no issues found.</p>}
-      {repos.map(repo => {
-        return (
-          <p key={repo.id} style={{ margin: "6px 0" }}>
-            <a href={`/${repo.full_name}`}>
-            - {repo.name}
-            - {repo.stargazers_count}
-            </a>
-          </p>
-        );
-      })}
-      {isRefreshing && <p>data loading...</p>}
-
-      <button
-        disabled={isLoadingMore || isReachingEnd}
-        onClick={() => setSize(size + 1)}
-      >
-        {isLoadingMore
-          ? "loading..."
-          : isReachingEnd
-          ? "no more issues"
-          : "load more"}
-      </button>
-    </div>
+    <ProfileLayout
+      profile={{
+        image: "https://avatars.githubusercontent.com/u/47549832?v=4",
+        name: "Tiny"
+      }}
+      {...props}
+    >
+      {repoData && (
+        <CardPaper>
+          <CardHeader>{repoData.full_name}</CardHeader>
+          <CardContent>
+            <RepoArticle repo={repoData} />
+          </CardContent>
+        </CardPaper>
+      )}
+    </ProfileLayout>
   );
 }
 
 // This function gets called at build time
 export async function getStaticPaths() {
-  const response = await fetch(`http://localhost:3000/api/usernames`);
-  const { usernames } = await response.json();
-  const paths = (usernames || []).map(username => {
-    return {
-      params: { username }
-    };
-  });
-
   return {
-    paths,
+    paths: [],
     fallback: true
   };
 }
@@ -78,7 +47,10 @@ export async function getStaticPaths() {
 // This also gets called at build time
 export async function getStaticProps({ params }) {
   return {
-    props: { username: params.username },
+    props: {
+      username: params.username,
+      repo: params.repo
+    },
     // Re-generate the post at most once per second
     // if a request comes in
     revalidate: 1
