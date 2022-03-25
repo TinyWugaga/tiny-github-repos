@@ -1,19 +1,27 @@
 import Image from "next/image";
 import styled from "styled-components";
 
+import LanguageProgress, {
+  LanguageProgressItem,
+  LanguageColorLabel
+} from "./LanguageProgress";
+import useLanguages from "./useLanguages";
 import { darkenColor, lightenColor } from "@/styles/utils/colorInput";
 import * as Logo from "@/components/Layout/Logo";
 
+import { mediaMobileMixin } from "@/styles/utils/device";
+
 const LanguageColorList = {
-  JavaScript: '#f1e05a',
-  TypeScript: '#2b7489',
-  HTML: '#e34c26',
-  PHP: '#4F5D95',
-}
+  JavaScript: "#f1e05a",
+  TypeScript: "#2b7489",
+  HTML: "#e34c26",
+  PHP: "#4F5D95"
+};
 
 const ArticleContainer = styled.article`
   display: flex;
   justify-content: space-around;
+  gap: 6%;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -26,10 +34,20 @@ const ArticleContainer = styled.article`
   margin-right: auto;
   margin-left: auto;
   padding: 0 16px;
+
+  ${mediaMobileMixin.M(`
+    flex-direction: column;
+    gap: 16px;
+
+    > div {
+      flex: 1;
+      width: 100%;
+    }
+  `)}
 `;
 
 const ArticleContent = styled.div`
-  width: 74.99995%;
+  width: 60%;
 
   display: flex;
   flex-direction: column;
@@ -55,12 +73,6 @@ const ArticleContentText = styled.p`
   vertical-align: middle;
   line-height: 1.2;
 `;
-const ArticleContentIcon = styled(Logo.StarFilled)`
-  width: 16px;
-  height: 16px;
-
-  margin-right: 12px;
-`;
 
 const ArticleContentBottom = styled.div`
   font-size: 14px;
@@ -68,99 +80,151 @@ const ArticleContentBottom = styled.div`
   padding: 16px 0;
 
   border-top: 1px solid ${({ theme }) => darkenColor(theme.palette.gray, 10)};
-`
+`;
 
-const LanguageProgress = styled.span`
-  display: flex;
-  height: 8px;
-  overflow: hidden;
-  background-color: ${({ theme }) => darkenColor(theme.palette.background, 3)};
-  border-radius: 6px;
-  outline: 1px solid transparent;
-`
-const LanguageProgressItem = styled.span`
-  background-color: ${({ language }) => LanguageColorList[language] || '#eaeaea'};
-  width: ${({ percentage }) => percentage};
-  outline: 2px solid transparent;
-`
-
-const LanguageColorLabel = styled.span`
-  display: inline-block;
-  margin: 12px 16px;
-  margin-left: 0;
-  line-height: 1.5;
-
-  &::before {
-    content: '';
-    display: inline-block;
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-right: 8px;
-    border: 1px solid ${({ theme }) => lightenColor(theme.palette.background, 3)};
-    border-radius: 50%;
-
-    background-color: ${({language}) => LanguageColorList[language] || '#eaeaea'};
-  }
-
-  &::after {
-    content: '${({ percentage }) => percentage}';
-    display: inline-block;
-    margin-left: 8px;
-    position: relative;
-    color: ${({ theme }) => theme.typography.color.dark};
-  }
-`
-
-const ArticleContentImage = styled.div`
-  width: 24.99995%;
+const ArticleContentAttachment = styled.div`
+  position: relative;
+  width: 34%;
 
   display: flex;
   flex-direction: column;
-  justify-content: center
+  justify-content: center;
+  padding: 2px;
+
+  border-radius: 15px;
+
+  &:hover {
+    background-color: ${({ theme }) =>
+      lightenColor(theme.palette.background, 5)}33;
+
+    box-shadow: 0px 0px 2px 3px
+      ${({ theme }) => lightenColor(theme.typography.color.dark, 8)}77;
+    cursor: pointer;
+
+    color: ${({ theme }) => theme.palette.info};
+  }
 `;
 
-const RepoArticle = ({ repo }) => {
+const ArticleContentImage = styled.div`
+  padding-top: 10%;
+  height: 90%;
+  min-height: 200px;
+
+  ${mediaMobileMixin.M(`
+    width: 80%;
+    height: 100%;
+    padding-top: 0%;
+    padding-left: 20%;
+  `)}
+
+  ${mediaMobileMixin.S(`
+    padding-left: 0%;
+    width: 100%;
+  `)}
+`;
+
+const ArticleContentImageLabel = styled.div`
+  display: block;
+  width: 40%;
+  max-width: 220px;
+  height: auto;
+  padding: 18px 2px 30px;
+
+  position: absolute;
+  top: 6%;
+  left: 5%;
+  margin: auto;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+
+  background-image: url("/chat-bubble.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  ${mediaMobileMixin.M(`
+    padding: 16px 2px 28px;
+    left: 2%;
+  `)}
+
+  ${mediaMobileMixin.S(`
+    padding: 10px 2px 24px;
+    top: 3%;
+    left: 4%;
+    font-size: 1rem;
+  `)}
+`;
+
+const getArticleIcon = logo => styled(logo)`
+  width: 16px;
+  height: 16px;
+
+  margin-right: 12px;
+`;
+
+const RepoArticle = ({
+  repo: {
+    description,
+    stargazers_count,
+    forks,
+    watchers,
+    languages_url,
+    html_url
+  } = {}
+}) => {
+  const contentItems = [
+    {
+      key: "stargazers_count",
+      value: stargazers_count,
+      icon: getArticleIcon(Logo.StarFilled),
+      label: "stars"
+    },
+    {
+      key: "watchers",
+      value: watchers,
+      icon: getArticleIcon(Logo.Eye),
+      label: "watching"
+    },
+    {
+      key: "forks",
+      value: forks,
+      icon: getArticleIcon(Logo.Fork),
+      label: "forks"
+    }
+  ];
+
+  const languages = useLanguages(languages_url);
+
   return (
     <ArticleContainer>
       <ArticleContent>
         <ArticleContentTitle>
           <p>{"About"}</p>
-          <p>{repo.description}</p>
+          <p>{description}</p>
         </ArticleContentTitle>
-        <ArticleContentText>
-          <ArticleContentIcon />
-          {repo.stargazers_count}
-          {" stars"}
-        </ArticleContentText>
-        <ArticleContentText>
-          <ArticleContentIcon />
-          {repo.watchers}
-          {" watching"}
-        </ArticleContentText>
-        <ArticleContentText>
-          <ArticleContentIcon />
-          {repo.forks}
-          {" forks"}
-        </ArticleContentText>
+        {contentItems.map(({ icon: Icon, key, value, label }) => (
+          <ArticleContentText key={key}>
+            <Icon />
+            {`${value} ${label}`}
+          </ArticleContentText>
+        ))}
         <ArticleContentBottom>
-            <LanguageProgress>
-              <LanguageProgressItem language="JavaScript" percentage="70%"></LanguageProgressItem>
-              <LanguageProgressItem language="TypeScript" percentage="30%"></LanguageProgressItem>
-            </LanguageProgress>
-            <LanguageColorLabel language="JavaScript" percentage="70%">
-              {"JavaScript"}
-            </LanguageColorLabel>
-            <LanguageColorLabel language="TypeScript" percentage="30%">
-              {"TypeScript"}
-            </LanguageColorLabel>
+          {languages && <LanguageProgress data={languages} />}
         </ArticleContentBottom>
       </ArticleContent>
-      <ArticleContentImage>
-        <Image src="/octocat.svg" alt="TinyOctocat" width={360} height={540} />
-      </ArticleContentImage>
+      <ArticleContentAttachment onClick={() => window.open(html_url)}>
+        <ArticleContentImage>
+          <Image
+            src="/octocat.svg"
+            alt="TinyOctocat"
+            width={360}
+            height={540}
+          />
+        </ArticleContentImage>
+        <ArticleContentImageLabel>{"Repo"}</ArticleContentImageLabel>
+      </ArticleContentAttachment>
     </ArticleContainer>
   );
 };
