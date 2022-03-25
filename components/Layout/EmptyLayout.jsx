@@ -9,9 +9,10 @@ const Container = styled.div`
   position: relative;
 `;
 const Main = styled.main`
-  margin-top: 48px;
-
   max-width: 1280px;
+  height: 100%;
+
+  margin-top: 36vh;
   margin-right: auto;
   margin-left: auto;
 
@@ -23,32 +24,22 @@ const Main = styled.main`
 `;
 
 const MainContainer = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: auto 0 minmax(
-      0,
-      calc(100% - 310px)
-    );
-  grid-gap: 24px;
+  position: relative;
+  width: 100%;
+  margin: auto;
 
-  ${mediaMobileMixin.L(`
-    grid-auto-flow: row;
-    grid-template-columns: 1fr !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    >[class*="main_block"] {
-      grid-row: 1;
-
-      width: 100%;
-      grid-column: 1;
-    }
-  `)}
+  flex-direction: column;
+  gap: 16px;
 `;
 
-const BasicLayout = ({ children, title }) => {
+const EmptyLayout = ({ children, title }) => {
   return (
     <Container>
       <Head title={title} />
-      <Header avatar="Dcard" />
       <Main>
         <MainContainer>
           {children}
@@ -58,4 +49,4 @@ const BasicLayout = ({ children, title }) => {
   );
 };
 
-export default BasicLayout;
+export default EmptyLayout;

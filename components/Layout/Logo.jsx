@@ -59,10 +59,10 @@ export const StarFilled = props => (
     aria-hidden="true"
     role="img"
     className="iconify iconify--ic"
-    width="32"
-    height="32"
+    width="1em"
+    height="1em"
     preserveAspectRatio="xMidYMid meet"
-    viewBox="0 0 24 24"
+    viewBox="0 -4 24 24"
     {...props}
   >
     <path
@@ -122,6 +122,36 @@ export const Search = props => (
     <path
       fill="#888888"
       d="M464 428L339.92 303.9a160.48 160.48 0 0 0 30.72-94.58C370.64 120.37 298.27 48 209.32 48S48 120.37 48 209.32s72.37 161.32 161.32 161.32a160.48 160.48 0 0 0 94.58-30.72L428 464ZM209.32 319.69a110.38 110.38 0 1 1 110.37-110.37a110.5 110.5 0 0 1-110.37 110.37Z"
+    ></path>
+  </svg>
+);
+
+export const Eye = props => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    preserveAspectRatio="xMidYMid meet"
+    {...props}
+  >
+    <path
+      fill="#888888"
+      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"
+    ></path>
+  </svg>
+);
+
+export const Fork = props => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="-4 -2 24 24"
+    preserveAspectRatio="xMidYMid meet"
+    {...props}
+  >
+    <path
+      fill="#888888"
+      d="M8 18a1 1 0 1 0 0-2a1 1 0 0 0 0 2zm1.033-3.817A3.001 3.001 0 1 1 7 14.17v-1.047c0-.074.003-.148.008-.221a1 1 0 0 0-.462-.637L3.46 10.42A3 3 0 0 1 2 7.845V5.829a3.001 3.001 0 1 1 2 0v2.016a1 1 0 0 0 .487.858l3.086 1.846a3 3 0 0 1 .443.324a3 3 0 0 1 .444-.324l3.086-1.846a1 1 0 0 0 .487-.858V5.841A3.001 3.001 0 0 1 13 0a3 3 0 0 1 1.033 5.817v2.028a3 3 0 0 1-1.46 2.575l-3.086 1.846a1 1 0 0 0-.462.637c.005.073.008.147.008.22v1.06zM3 4a1 1 0 1 0 0-2a1 1 0 0 0 0 2zm10 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2z"
     ></path>
   </svg>
 );
