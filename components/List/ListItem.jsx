@@ -65,13 +65,7 @@ const ListItemAttachmentIcon = styled(Logo.StarFilled)`
   display: inline-block;
   width: 16px;
   height: 16px;
-  vertical-align: middle;
-`;
-const ListItemAttachmentText = styled.span`
-  display: inline-block;
-  padding: 2px 6px;
-  font-size: 14px;
-  vertical-align: middle;
+  margin-right: 4px;
 `;
 
 const ListItemButton = styled.button`
@@ -131,7 +125,7 @@ const ListItem = ({ data }) => {
         <ListItemAttachment>
           <ListItemAttachmentWrapper>
             <ListItemAttachmentIcon />
-            <ListItemAttachmentText>{attachment}</ListItemAttachmentText>
+            {attachment}
           </ListItemAttachmentWrapper>
         </ListItemAttachment>
       </ListItemBlockLeft>
