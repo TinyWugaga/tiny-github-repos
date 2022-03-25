@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   body {
@@ -7,8 +7,8 @@ export default createGlobalStyle`
 
     font-size: 14px;
     line-height: 1.5;
-    color: ${({theme}) => theme.typography.color.light};
-    background-color: ${({theme}) => theme.palette.background};
+    color: ${({ theme }) => theme.typography.color.light};
+    background-color: ${({ theme }) => theme.palette.background};
 
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
   }
@@ -33,6 +33,11 @@ export default createGlobalStyle`
     text-decoration: none;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   h3 {
     font-size: 20px;
     font-weight: 600;
@@ -41,4 +46,4 @@ export default createGlobalStyle`
   p {
     margin-top: 0;
   }
-`
+`;

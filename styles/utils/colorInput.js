@@ -14,3 +14,11 @@ export const darkenColor = function(color, percent) {
   return lightenColor(color, -percent)
 }
 
+export const randomColor = function() {
+  const letters = 'ABCDEF'
+  let color = '#'
+  Array(3).fill().forEach(i => color += letters[Math.floor(Math.random() * 6)])
+  Array(3).fill().forEach(i => color += Math.floor(Math.random() * 10))
+  return color
+}
+
