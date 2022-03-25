@@ -123,12 +123,13 @@ const TEST_DATA_LIST = [
   }
 ];
 
-function Test(props) {
+function Test({ title, ...props }) {
   useWindowScroll(e => {
     if (!e.target) return;
   });
   return (
     <ProfileLayout
+      title={title}
       profile={{
         image: "https://avatars.githubusercontent.com/u/47549832?v=4",
         name: "Tiny"
@@ -141,7 +142,11 @@ function Test(props) {
           <RepoArticle
             repo={{
               description: "test and no data thinking",
-              stargazers_count: 2
+              stargazers_count: 2,
+              watchers: 5,
+              forks: 6,
+              languages_url: 'https://api.github.com/repos/sous-chefs/php/languages',
+              html_url: 'https://github.com/notion/chef-php',
             }}
           />
         </CardContent>

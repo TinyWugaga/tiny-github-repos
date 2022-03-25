@@ -5,22 +5,30 @@ import { ProfileLayout } from "@/components/Layout";
 import { CardPaper, CardHeader, CardContent } from "@/components/Card";
 import RepoArticle from "@/components/RepoArticle";
 
-function Repo({ username, repo, ...props }) {
+function Repo({ title, username, repo, ...props }) {
   const router = useRouter();
 
-  const { data: repoData, error } = useSWR(
+  const { data: repoData, error: repoError } = useSWR(
     !router.isFallback
       ? `https://api.github.com/repos/${username}/${repo}`
       : null
   );
 
-  if (error) return "An error has occurred.";
+  const { data: ownerData, error: ownerError } = useSWR(
+    username ? `https://api.github.com/users/${username}` : null
+  );
+
+  if (repoError || ownerError) return "An error has occurred.";
+
+  const { login, name, avatar_url, html_url } = ownerData || {};
 
   return (
     <ProfileLayout
+      title={title}
       profile={{
-        image: "https://avatars.githubusercontent.com/u/47549832?v=4",
-        name: "Tiny"
+        image: avatar_url,
+        name: name || login,
+        link: html_url
       }}
       {...props}
     >
