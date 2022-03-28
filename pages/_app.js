@@ -1,13 +1,16 @@
 import { SWRConfig } from 'swr';
 import { ThemeProvider } from 'styled-components';
 
+import fetcher from '@/lib/api/fetcher';
+
 import theme from '@/styles/theme';
 import GlobalCSS from '@/styles/global';
 
-const fetcher = (resource, init) =>
-  fetch(resource, init).then(res => res.json());
-
-function MyApp({ Component, pageProps }) {
+function MyApp({
+  Component,
+  pageProps,
+  fallback
+}) {
   return (
     <SWRConfig value={{ fetcher }}>
       <ThemeProvider theme={theme}>

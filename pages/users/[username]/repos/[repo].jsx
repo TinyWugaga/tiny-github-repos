@@ -1,42 +1,46 @@
+import { useMemo } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
+import useUserProfile from "@/lib/hook/useUserProfile";
+import useUserRepoArticle from "@/lib/hook/useUserRepoArticle";
+
 import { ProfileLayout } from "@/components/Layout";
 import { CardPaper, CardHeader, CardContent } from "@/components/Card";
+import LoadingContent from "@/components/Layout/LoadingContent";
+import EmptyRepoArticle from "@/components/RepoArticle/EmptyRepoArticle";
 import RepoArticle from "@/components/RepoArticle";
 
 function Repo({ title, username, repo, ...props }) {
   const router = useRouter();
 
-  const { data: repoData, error: repoError } = useSWR(
-    !router.isFallback
-      ? `https://api.github.com/repos/${username}/${repo}`
-      : null
-  );
+  const { profile, isError: isProfileError } = useUserProfile(username);
+  const {
+    article,
+    isEmpty,
+    isLoading,
+    isError: isRepoError
+  } = useUserRepoArticle(username, repo);
 
-  const { data: ownerData, error: ownerError } = useSWR(
-    username ? `https://api.github.com/users/${username}` : null
-  );
+  const isError = useMemo(() => isRepoError || isProfileError, [
+    isRepoError,
+    isProfileError
+  ]);
+  if (isError) router.push("/404");
 
-  if (repoError || ownerError) return "An error has occurred.";
-
-  const { login, name, avatar_url, html_url } = ownerData || {};
-
-  return (
-    <ProfileLayout
-      title={title}
-      profile={{
-        image: avatar_url,
-        name: name || login,
-        link: html_url
-      }}
-      {...props}
-    >
-      {repoData && (
+  return router.isFallback ? (
+    <LoadingContent />
+  ) : (
+    <ProfileLayout title={title} profile={profile} {...props}>
+      {isEmpty ? (
+        <EmptyRepoArticle />
+      ) : isLoading ? (
+        <LoadingContent />
+      ) : (
         <CardPaper>
-          <CardHeader>{repoData.full_name}</CardHeader>
+          <CardHeader>{article.name}</CardHeader>
           <CardContent>
-            <RepoArticle repo={repoData} />
+            <RepoArticle article={article} />
           </CardContent>
         </CardPaper>
       )}
@@ -47,7 +51,14 @@ function Repo({ title, username, repo, ...props }) {
 // This function gets called at build time
 export async function getStaticPaths() {
   return {
-    paths: [],
+    paths: [
+      {
+        params: {
+          username: "Tinywugaga",
+          repo: "108WebProgramming-php"
+        }
+      }
+    ],
     fallback: true
   };
 }
@@ -58,10 +69,7 @@ export async function getStaticProps({ params }) {
     props: {
       username: params.username,
       repo: params.repo
-    },
-    // Re-generate the post at most once per second
-    // if a request comes in
-    revalidate: 1
+    }
   };
 }
 
