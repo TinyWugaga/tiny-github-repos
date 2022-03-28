@@ -5,18 +5,10 @@ import LanguageProgress, {
   LanguageProgressItem,
   LanguageColorLabel
 } from "./LanguageProgress";
-import useLanguages from "./useLanguages";
-import { darkenColor, lightenColor } from "@/styles/utils/colorInput";
 import * as Logo from "@/components/Layout/Logo";
 
+import { darkenColor, lightenColor } from "@/styles/utils/colorInput";
 import { mediaMobileMixin } from "@/styles/utils/device";
-
-const LanguageColorList = {
-  JavaScript: "#f1e05a",
-  TypeScript: "#2b7489",
-  HTML: "#e34c26",
-  PHP: "#4F5D95"
-};
 
 const ArticleContainer = styled.article`
   display: flex;
@@ -165,13 +157,13 @@ const getArticleIcon = logo => styled(logo)`
 `;
 
 const RepoArticle = ({
-  repo: {
+  article: {
     description,
     stargazers_count,
     forks,
     watchers,
-    languages_url,
-    html_url
+    link,
+    languages
   } = {}
 }) => {
   const contentItems = [
@@ -195,8 +187,6 @@ const RepoArticle = ({
     }
   ];
 
-  const languages = useLanguages(languages_url);
-
   return (
     <ArticleContainer>
       <ArticleContent>
@@ -214,7 +204,7 @@ const RepoArticle = ({
           {languages && <LanguageProgress data={languages} />}
         </ArticleContentBottom>
       </ArticleContent>
-      <ArticleContentAttachment onClick={() => window.open(html_url)}>
+      <ArticleContentAttachment onClick={() => window.open(link)}>
         <ArticleContentImage>
           <Image
             src="/octocat.svg"

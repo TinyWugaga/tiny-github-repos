@@ -110,7 +110,7 @@ const LikeIcon = styled(Logo.LoveLine)`
 `
 
 const ListItem = ({ data }) => {
-  const { title, subtitle, attachment, link } = data;
+  const { title, subtitle, attachment, link = '' } = data;
   return (
     <ListItemContainer>
       <ListItemBlockLeft>
