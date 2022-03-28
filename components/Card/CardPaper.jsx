@@ -4,7 +4,7 @@ import { isHexColor } from "@/styles/utils/colorInput";
 import { darkenColor } from "@/styles/utils/colorInput";
 
 const CardPaper = styled.div`
-  margin-bottom: 16px;
+  margin: -1px;
 
   border-color: ${({ theme }) => darkenColor(theme.palette.gray, 10)};
   border-style: solid;

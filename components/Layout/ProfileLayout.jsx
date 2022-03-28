@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 import BasicLayout from "./BasicLayout";
@@ -34,11 +35,16 @@ const ProfileCardTitleInner = styled.span`
   line-height: 1.25;
   color: ${({ theme }) => theme.typography.color.light};
 `;
+
 const ProfileCardSubtitleInner = styled(ProfileCardTitleInner)`
   font-size: 20px;
   font-weight: 300;
   line-height: 24px;
   color: ${({ theme }) => theme.typography.color.light}88;
+
+  &:hover {
+    color: ${({ theme }) => theme.palette.info};
+  }
 `;
 
 const AvatarImage = styled.img`
@@ -80,7 +86,11 @@ const ProfileLayout = ({ children, profile = {}, isLoading, ...props }) => {
           />
           <ProfileCardTitle>
             <ProfileCardTitleInner>{name}</ProfileCardTitleInner>
-            <ProfileCardSubtitleInner>{login}</ProfileCardSubtitleInner>
+            <Link href={`/users/${login}/repos`}>
+              <a>
+                <ProfileCardSubtitleInner>{login}</ProfileCardSubtitleInner>
+              </a>
+            </Link>
           </ProfileCardTitle>
         </ProfileCard>
       </Sidebar>
