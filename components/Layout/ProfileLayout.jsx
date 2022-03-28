@@ -26,11 +26,18 @@ const ProfileCardTitle = styled.h1`
 `;
 
 const ProfileCardTitleInner = styled.span`
-  font-size: 36px;
+  display: block;
+  font-size: 26px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 1.25;
   color: ${({ theme }) => theme.typography.color.light};
+`;
+const ProfileCardSubtitleInner = styled(ProfileCardTitleInner)`
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 24px;
+  color: ${({ theme }) => theme.typography.color.light}88;
 `;
 
 const AvatarImage = styled.img`
@@ -57,16 +64,22 @@ const AvatarImage = styled.img`
   `)}
 `;
 
-const ProfileLayout = ({ children, title, profile }) => {
-  const { image, name, link } = profile;
+const ProfileLayout = ({ children, profile = {}, ...props }) => {
+  const { login, name, image, link } = profile;
 
   return (
-    <BasicLayout title={title}>
+    <BasicLayout {...props}>
       <Sidebar className="main_block">
         <ProfileCard>
-          <AvatarImage width="260" height="260" src={image} onClick={() => window.open(link)} />
+          <AvatarImage
+            width="260"
+            height="260"
+            src={image}
+            onClick={() => window.open(link)}
+          />
           <ProfileCardTitle>
             <ProfileCardTitleInner>{name}</ProfileCardTitleInner>
+            <ProfileCardSubtitleInner>{login}</ProfileCardSubtitleInner>
           </ProfileCardTitle>
         </ProfileCard>
       </Sidebar>

@@ -155,3 +155,165 @@ export const Fork = props => (
     ></path>
   </svg>
 );
+
+export const Repo = (props) => {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="#888888"
+        fillRule="evenodd"
+        d="M3 2.75A2.75 2.75 0 0 1 5.75 0h14.5a.75.75 0 0 1 .75.75v20.5a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1 0-1.5h5.25v-4H6A1.5 1.5 0 0 0 4.5 18v.75c0 .716.43 1.334 1.05 1.605a.75.75 0 0 1-.6 1.374A3.25 3.25 0 0 1 3 18.75v-16zM19.5 1.5V15H6c-.546 0-1.059.146-1.5.401V2.75c0-.69.56-1.25 1.25-1.25H19.5z"
+      ></path>
+      <path
+        fill="currentColor"
+        d="M7 18.25a.25.25 0 0 1 .25-.25h5a.25.25 0 0 1 .25.25v5.01a.25.25 0 0 1-.397.201l-2.206-1.604a.25.25 0 0 0-.294 0L7.397 23.46a.25.25 0 0 1-.397-.2v-5.01z"
+      ></path>
+    </svg>
+  );
+}
+
+export const LoadingBubble = props => (
+  <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <circle cx="12" cy="2" r="0" fill="#888888">
+      <animate
+        attributeName="r"
+        begin="0"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+    <circle
+      cx="12"
+      cy="2"
+      r="0"
+      fill="currentColor"
+      transform="rotate(45 12 12)"
+    >
+      <animate
+        attributeName="r"
+        begin="0.125s"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+    <circle
+      cx="12"
+      cy="2"
+      r="0"
+      fill="currentColor"
+      transform="rotate(90 12 12)"
+    >
+      <animate
+        attributeName="r"
+        begin="0.25s"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+    <circle
+      cx="12"
+      cy="2"
+      r="0"
+      fill="currentColor"
+      transform="rotate(135 12 12)"
+    >
+      <animate
+        attributeName="r"
+        begin="0.375s"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+    <circle
+      cx="12"
+      cy="2"
+      r="0"
+      fill="currentColor"
+      transform="rotate(180 12 12)"
+    >
+      <animate
+        attributeName="r"
+        begin="0.5s"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+    <circle
+      cx="12"
+      cy="2"
+      r="0"
+      fill="currentColor"
+      transform="rotate(225 12 12)"
+    >
+      <animate
+        attributeName="r"
+        begin="0.625s"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+    <circle
+      cx="12"
+      cy="2"
+      r="0"
+      fill="currentColor"
+      transform="rotate(270 12 12)"
+    >
+      <animate
+        attributeName="r"
+        begin="0.75s"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+    <circle
+      cx="12"
+      cy="2"
+      r="0"
+      fill="currentColor"
+      transform="rotate(315 12 12)"
+    >
+      <animate
+        attributeName="r"
+        begin="0.875s"
+        calcMode="spline"
+        dur="1s"
+        keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+        repeatCount="indefinite"
+        values="0;2;0;0"
+      ></animate>
+    </circle>
+  </svg>
+);
+
+export const EmojiDizzyFilled = (props) => {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 32 32" {...props}>
+      <path
+        fill="#888888"
+        d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2ZM9 16.41L7.59 15l2-2l-2-2L9 9.59l2 2l2-2L14.41 11l-2 2l2 2L13 16.41l-2-2ZM16 25a3 3 0 1 1 3-3a3 3 0 0 1-3 3Zm8.41-10L23 16.41l-2-2l-2 2L17.59 15l2-2l-2-2L19 9.59l2 2l2-2L24.41 11l-2 2Z"
+      ></path>
+    </svg>
+  );
+}
