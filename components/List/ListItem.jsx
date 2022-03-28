@@ -6,6 +6,7 @@ import buttonCss from "@/styles/commonStyle/button";
 import * as Logo from "@/components/Layout/Logo";
 
 const ListItemContainer = styled.div`
+  position: relative;
   display: flex;
 
   padding-top: 24px;

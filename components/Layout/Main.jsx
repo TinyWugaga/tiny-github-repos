@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { mediaMobileMixin } from "@/styles/utils/device";
 
 const Container = styled.div`
+  position: relative;
+
   grid-column: 2 / span 2;
   min-width: 0;
 

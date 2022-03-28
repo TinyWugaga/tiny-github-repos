@@ -5,7 +5,7 @@ import useUserProfile from "@/lib/hook/useUserProfile";
 import useUserRepoList from "@/lib/hook/useUserRepoList";
 import useWindowScroll from "@/lib/hook/useWindowScroll";
 
-import { ProfileLayout } from "@/components/Layout";
+import { EmptyLayout, ProfileLayout } from "@/components/Layout";
 import LoadingContent from "@/components/Layout/LoadingContent";
 import EmptyRepoArticle from "@/components/RepoArticle/EmptyRepoArticle";
 import List from "@/components/List";
@@ -20,34 +20,29 @@ function Repos({ title, username, ...props }) {
     isError: isRepoListError,
     isReachingEnd,
     isRefreshing,
-    isLoadingMore
+    isLoadingInitialData
   } = useUserRepoList(username);
 
-  const { profile, isError: isProfileError } = useUserProfile(
-    username
+  const { profile, isError: isProfileError } = useUserProfile(username);
+
+  useWindowScroll(
+    () => handleLoadMoreRepo()
   );
 
-  useWindowScroll(() => !(isReachingEnd || isRefreshing) && handleLoadMoreRepo());
-
-  const ErrorHandler = useMemo(() => isProfileError || isRepoListError , [
+  const ErrorHandler = useMemo(() => isProfileError || isRepoListError, [
     isProfileError,
     isRepoListError
   ]);
 
-  if(ErrorHandler) return ErrorHandler
+  if (ErrorHandler) return ErrorHandler;
 
   return router.isFallback ? (
-    <LoadingContent />
+    <EmptyLayout title={title}>
+      <LoadingContent />
+    </EmptyLayout>
   ) : (
-    <ProfileLayout title={title} profile={profile} {...props}>
-      {isEmpty ? (
-        <EmptyRepoArticle />
-      ) : (
-        <>
-          <LoadingContent />
-          <List data={repoList} />
-        </>
-      )}
+    <ProfileLayout title={title} profile={profile} isLoading={isLoadingInitialData} {...props}>
+      {isEmpty ? <EmptyRepoArticle /> : <List data={repoList} />}
     </ProfileLayout>
   );
 }

@@ -6,14 +6,19 @@ import * as Logo from "@/components/Layout/Logo";
 import { mediaDesktopMixin, mediaMobileMixin } from "@/styles/utils/device";
 
 const ArticleContainer = styled.article`
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
   padding: 32px;
   text-align: center;
 `;
 
 const ArticleContent = styled.div`
   width: 100%;
-  min-height: 240px;
+  min-height: 220px;
 
   display: flex;
   justify-content: center;

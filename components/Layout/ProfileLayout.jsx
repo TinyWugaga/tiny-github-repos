@@ -3,6 +3,7 @@ import styled from "styled-components";
 import BasicLayout from "./BasicLayout";
 import Sidebar from "./Sidebar";
 import Main from "./Main";
+import LoadingContent from "@/components/Layout/LoadingContent";
 
 import { mediaMobileMixin } from "@/styles/utils/device";
 
@@ -64,7 +65,7 @@ const AvatarImage = styled.img`
   `)}
 `;
 
-const ProfileLayout = ({ children, profile = {}, ...props }) => {
+const ProfileLayout = ({ children, profile = {}, isLoading, ...props }) => {
   const { login, name, image, link } = profile;
 
   return (
@@ -83,7 +84,9 @@ const ProfileLayout = ({ children, profile = {}, ...props }) => {
           </ProfileCardTitle>
         </ProfileCard>
       </Sidebar>
-      <Main className="main_block">{children}</Main>
+      <Main className="main_block">
+        {isLoading ? <LoadingContent /> : children}
+      </Main>
     </BasicLayout>
   );
 };

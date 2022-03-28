@@ -5,7 +5,7 @@ import useSWR from "swr";
 import useUserProfile from "@/lib/hook/useUserProfile";
 import useUserRepoArticle from "@/lib/hook/useUserRepoArticle";
 
-import { ProfileLayout } from "@/components/Layout";
+import { EmptyLayout, ProfileLayout } from "@/components/Layout";
 import { CardPaper, CardHeader, CardContent } from "@/components/Card";
 import LoadingContent from "@/components/Layout/LoadingContent";
 import EmptyRepoArticle from "@/components/RepoArticle/EmptyRepoArticle";
@@ -22,20 +22,26 @@ function Repo({ title, username, repo, ...props }) {
     isError: isRepoError
   } = useUserRepoArticle(username, repo);
 
-  const isError = useMemo(() => isRepoError || isProfileError, [
-    isRepoError,
-    isProfileError
+  const ErrorHandler = useMemo(() => isProfileError || isRepoError, [
+    isProfileError,
+    isRepoError
   ]);
-  if (isError) router.push("/404");
+
+  if (ErrorHandler) return ErrorHandler;
 
   return router.isFallback ? (
-    <LoadingContent />
+    <EmptyLayout title={title}>
+      <LoadingContent />
+    </EmptyLayout>
   ) : (
-    <ProfileLayout title={title} profile={profile} {...props}>
+    <ProfileLayout
+      title={title}
+      profile={profile}
+      isLoading={isLoading}
+      {...props}
+    >
       {isEmpty ? (
         <EmptyRepoArticle />
-      ) : isLoading ? (
-        <LoadingContent />
       ) : (
         <CardPaper>
           <CardHeader>{article.name}</CardHeader>
