@@ -8,7 +8,7 @@ import LanguageProgress, {
 import * as Logo from "@/components/Layout/Logo";
 
 import { darkenColor, lightenColor } from "@/styles/utils/colorInput";
-import { mediaMobileMixin } from "@/styles/utils/device";
+import { mediaDesktopMixin, mediaMobileMixin } from "@/styles/utils/device";
 
 const ArticleContainer = styled.article`
   display: flex;
@@ -45,30 +45,51 @@ const ArticleContent = styled.div`
   flex-direction: column;
 `;
 
-const ArticleContentTitle = styled.h2`
+const ArticleContentTitle = styled.div`
+  flex-grow: 2;
+
   padding-bottom: 0.3em;
   font-size: 1.5em;
   border-bottom: 1px solid ${({ theme }) => darkenColor(theme.palette.gray, 10)};
 
   margin: 0.67em 0;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   line-height: 1.25;
-  font-size: 2em;
-  font-weight: 600;
+  font-weight: 500;
+
+  h2 {
+    ${mediaMobileMixin.M(`
+        min-height: 30%;
+    `)}
+    ${mediaMobileMixin.S(`
+        min-height: 0%;
+    `)}
+  }
 
   p {
+    font-size: 18px;
+    padding: 12px 0px;
+
     margin-bottom: 8px;
+    font-weight: 300;
   }
 `;
 
 const ArticleContentText = styled.p`
+  flex-grow: 1;
+
+  height: 1em;
+  padding-top: 0.5em;
+  font-size: 1em;
   vertical-align: middle;
   line-height: 1.2;
 `;
 
 const ArticleContentBottom = styled.div`
+  flex-grow: 3;
+
   font-size: 14px;
-  margin-top: 8px;
+  margin-top: 24px;
   padding: 16px 0;
 
   border-top: 1px solid ${({ theme }) => darkenColor(theme.palette.gray, 10)};
@@ -191,7 +212,7 @@ const RepoArticle = ({
     <ArticleContainer>
       <ArticleContent>
         <ArticleContentTitle>
-          <p>{"About"}</p>
+          <h2>{"About"}</h2>
           <p>{description}</p>
         </ArticleContentTitle>
         {contentItems.map(({ icon: Icon, key, value, label }) => (
@@ -201,7 +222,9 @@ const RepoArticle = ({
           </ArticleContentText>
         ))}
         <ArticleContentBottom>
-          {languages && <LanguageProgress data={languages} />}
+          {Boolean(languages && Object.values(languages).length) && (
+            <LanguageProgress data={languages} />
+          )}
         </ArticleContentBottom>
       </ArticleContent>
       <ArticleContentAttachment onClick={() => window.open(link)}>

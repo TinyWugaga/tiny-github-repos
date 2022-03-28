@@ -13,7 +13,7 @@ export const LanguageColorList = {
 const getRandomColor = (index) => {
   const colorInMap = LanguageColorList.other[index]
   if (colorInMap) return colorInMap
-  LanguageColorList.other.push(lightenColor(randomColor(), index * 18))
+  LanguageColorList.other[index] = lightenColor(randomColor(), index * 18)
   return LanguageColorList.other[index]
 }
 

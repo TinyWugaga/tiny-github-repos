@@ -27,7 +27,7 @@ function Repo({ title, username, repo, ...props }) {
     isRepoError
   ]);
 
-  if (ErrorHandler) return ErrorHandler;
+  // if (ErrorHandler) return ErrorHandler;
 
   return router.isFallback ? (
     <EmptyLayout title={title}>

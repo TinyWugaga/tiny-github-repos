@@ -5,7 +5,7 @@ import { darkenColor, lightenColor } from "@/styles/utils/colorInput";
 const CardHeaderContainer = styled.div`
   position: relative;
 
-  padding: 8px;
+  padding: 12px;
   margin: -1px -1px 0;
   background-color: ${({ theme }) => lightenColor(theme.palette.background, 5)};
   border-color: ${({ theme }) => darkenColor(theme.palette.gray, 10)};
@@ -15,7 +15,7 @@ const CardHeaderContainer = styled.div`
   border-top-right-radius: 6px;
 `;
 
-const CardHeaderTitle = styled.div`
+const CardHeaderTitle = styled.h3`
   display: flex;
 
   align-items: center;
