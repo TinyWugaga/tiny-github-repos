@@ -103,10 +103,4 @@ function Users({ title = '' }) {
   );
 }
 
-export async function getStaticProps() {
-  return {
-    props: { }
-  };
-}
-
 export default Users;
