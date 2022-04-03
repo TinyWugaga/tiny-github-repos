@@ -22,8 +22,8 @@ const Footer = styled.footer`
 const FooterContainer = styled.div`
   display: flex;
   font-size: 12px;
-  padding-top: 24px;
-  padding-bottom: 32px;
+  padding-top: 20px;
+  padding-bottom: 24px;
   position: relative;
   align-items: center;
   flex-wrap: wrap;

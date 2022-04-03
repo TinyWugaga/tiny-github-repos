@@ -27,7 +27,7 @@ const Main = styled.main`
   width: 100%;
   height: auto;
 
-  margin-top: 160px;
+  margin-top: 12vh;
   margin-right: auto;
   margin-left: auto;
 

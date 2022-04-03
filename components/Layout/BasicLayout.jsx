@@ -8,17 +8,21 @@ import { mediaDesktopMixin, mediaMobileMixin } from "@/styles/utils/device";
 
 const LayoutContainer = styled.div`
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
 
   .main {
-    min-height: calc(100% - 248px);
+    min-height: calc(100vh - 232px);
+
+    ${mediaMobileMixin.L(`
+      min-height: calc(100vh - 212px);
+    `)}
   }
   .footer {
     min-height: 64px;
   }
 `;
 const Main = styled.main`
-  max-width: 1280px;
+  max-width: 1440px;
   height: auto;
 
   margin-top: 36px;
@@ -28,8 +32,11 @@ const Main = styled.main`
 
   padding: 0 32px;
 
-  ${mediaDesktopMixin.L(`
-    max-width: 1440px;
+  ${mediaDesktopMixin.M(`
+    max-width: 1280px;
+  `)}
+  ${mediaMobileMixin.L(`
+    margin-top: 12px;
   `)}
 `;
 
