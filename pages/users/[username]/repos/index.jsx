@@ -54,13 +54,7 @@ function Repos({ title, username, profile, error, ...props }) {
 // This function gets called at build time
 export async function getStaticPaths() {
   return {
-    paths: [
-      {
-        params: {
-          username: "Tinywugaga"
-        }
-      }
-    ],
+    paths: [],
     fallback: true
   };
 }

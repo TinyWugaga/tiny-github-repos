@@ -59,14 +59,7 @@ function Repo({ title, username, profile, repo, error, ...props }) {
 // This function gets called at build time
 export async function getStaticPaths() {
   return {
-    paths: [
-      {
-        params: {
-          username: "Tinywugaga",
-          repo: "108WebProgramming-php"
-        }
-      }
-    ],
+    paths: [],
     fallback: true
   };
 }
