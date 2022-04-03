@@ -17,6 +17,10 @@ const Footer = styled.footer`
   ${mediaDesktopMixin.L(`
     max-width: 1440px;
   `)}
+
+  ${mediaDesktopMixin.XL(`
+    max-width: 1920px;
+  `)}
 `;
 
 const FooterContainer = styled.div`

@@ -12,8 +12,8 @@ import LoadingContent from "@/components/Layout/LoadingContent";
 import EmptyRepoArticle from "@/components/RepoArticle/EmptyRepoArticle";
 import List from "@/components/List";
 
-function Repos({ title, username, profile, errorName, ...props }) {
-  const isProfileError = getErrorLayout(errorName);
+function Repos({ title, username, profile, error, ...props }) {
+  const isProfileError = getErrorLayout(error);
   const router = useRouter();
 
   const {
@@ -71,13 +71,12 @@ export async function getStaticProps({ params }) {
 
   try {
     const { profile, error } = await fetchProfile(username);
-    const errorName = error && error.name
 
     return {
       props: {
         username,
         profile,
-        errorName
+        error
       }
     };
   } catch (error) {
@@ -85,7 +84,7 @@ export async function getStaticProps({ params }) {
     return {
       props: {
         username,
-        errorName: getError.name
+        error: getError
       }
     };
   }

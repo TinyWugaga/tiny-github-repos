@@ -7,7 +7,7 @@ import { mediaDesktopMixin, mediaMobileMixin } from "@/styles/utils/device";
 
 const LayoutContainer = styled.div`
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
 
   display: flex;
   justify-content: center;
@@ -16,10 +16,14 @@ const LayoutContainer = styled.div`
   flex-direction: column;
 
   .main {
-    height: 84%;
+    min-height: calc(100vh - 220px);
+
+    ${mediaMobileMixin.L(`
+      min-height: calc(100vh - 200px);
+    `)}
   }
   .footer {
-    height: 16%;
+    min-height: 64px;
   }
 `;
 const Main = styled.main`
@@ -38,6 +42,10 @@ const Main = styled.main`
 
   ${mediaDesktopMixin.L(`
     max-width: 1440px;
+  `)}
+
+  ${mediaDesktopMixin.XL(`
+    max-width: 1920px;
   `)}
 
   ${mediaMobileMixin.L(`
