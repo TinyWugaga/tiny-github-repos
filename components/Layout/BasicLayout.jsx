@@ -2,16 +2,27 @@ import styled from "styled-components";
 
 import Head from "./Head";
 import Header from "./Header";
+import Footer from "./Footer";
 
 import { mediaDesktopMixin, mediaMobileMixin } from "@/styles/utils/device";
 
 const Container = styled.div`
   position: relative;
+  height: 100vh;
+
+  .main {
+    min-height: 84%;
+  }
+  .footer {
+    min-height: 64px;
+  }
 `;
 const Main = styled.main`
-  margin-top: 48px;
-
   max-width: 1280px;
+  height: auto;
+
+  margin-top: 48px;
+  margin-bottom: 48px;
   margin-right: auto;
   margin-left: auto;
 
@@ -25,10 +36,7 @@ const Main = styled.main`
 const MainContainer = styled.div`
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: auto 0 minmax(
-      0,
-      calc(100% - 310px)
-    );
+  grid-template-columns: auto 0 minmax(0, calc(100% - 310px));
   grid-gap: 24px;
 
   ${mediaMobileMixin.L(`
@@ -49,11 +57,10 @@ const BasicLayout = ({ children, title }) => {
     <Container>
       <Head title={title} />
       <Header avatar="Dcard" />
-      <Main>
-        <MainContainer>
-          {children}
-        </MainContainer>
+      <Main className="main">
+        <MainContainer>{children}</MainContainer>
       </Main>
+      <Footer className="footer"/>
     </Container>
   );
 };

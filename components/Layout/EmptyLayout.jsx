@@ -1,20 +1,36 @@
 import styled from "styled-components";
 
 import Head from "./Head";
-import Header from "./Header";
+import Footer from "./Footer";
 
 import { mediaDesktopMixin, mediaMobileMixin } from "@/styles/utils/device";
 
 const Container = styled.div`
   position: relative;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+
+  .main {
+    min-height: 84%;
+  }
+  .footer {
+    min-height: 64px;
+  }
 `;
 const Main = styled.main`
   max-width: 1280px;
-  height: 100%;
+  height: auto;
 
-  margin-top: 36vh;
   margin-right: auto;
   margin-left: auto;
+
+  display: flex;
+  justify-content: center;
 
   padding: 0 32px;
 
@@ -40,11 +56,10 @@ const EmptyLayout = ({ children, title }) => {
   return (
     <Container>
       <Head title={title} />
-      <Main>
-        <MainContainer>
-          {children}
-        </MainContainer>
+      <Main className="main">
+        <MainContainer>{children}</MainContainer>
       </Main>
+      <Footer className="footer"/>
     </Container>
   );
 };

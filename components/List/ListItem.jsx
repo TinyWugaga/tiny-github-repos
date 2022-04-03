@@ -14,6 +14,10 @@ const ListItemContainer = styled.div`
 
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => darkenColor(theme.palette.gray, 20)};
+
+  &:nth-last-child(1) {
+    border-bottom: unset;
+  }
 `;
 
 const ListItemBlock = styled.div`
