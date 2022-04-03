@@ -12,7 +12,7 @@ const Footer = styled.footer`
   margin-right: auto;
   margin-left: auto;
 
-  padding: 0 32px;
+  padding: 0 24px;
 
   ${mediaDesktopMixin.L(`
     max-width: 1440px;
@@ -22,8 +22,8 @@ const Footer = styled.footer`
 const FooterContainer = styled.div`
   display: flex;
   font-size: 12px;
-  padding-top: 28px;
-  padding-bottom: 36px;
+  padding-top: 24px;
+  padding-bottom: 32px;
   position: relative;
   align-items: center;
   flex-wrap: wrap;
@@ -46,8 +46,8 @@ const FooterComponent = ({ className }) => {
           <Image
             src="/tiny_logo_text.svg"
             alt="TinyLogo"
-            width={180}
-            height={36}
+            width={160}
+            height={32}
           />
         </FooterLogoWrapper>
       </FooterContainer>

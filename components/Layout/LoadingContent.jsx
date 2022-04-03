@@ -12,26 +12,14 @@ const ArticleContainer = styled.article`
   bottom: 0;
   right: 0;
   margin: auto;
-  padding: 32px;
-  text-align: center;
-`;
 
-const ArticleContent = styled.div`
   width: 100%;
-  min-height: 220px;
+  height: auto;
 
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  ${mediaDesktopMixin.L(`
-    justify-content: flex-end;
-  `)}
-
-  ${mediaMobileMixin.L(`
-    justify-content: center;
-  `)}
 `;
 
 const ArticleContentTitle = styled.p`
@@ -65,15 +53,11 @@ const ArticleContentIcon = styled(Logo.LoadingBubble)`
   `)}
 `;
 
-const LoadingContent = () => {
+const LoadingContent = ({ className }) => {
   return (
-    <ArticleContainer>
-      <ArticleContent>
+    <ArticleContainer className={className}>
         <ArticleContentIcon />
-        <ArticleContentTitle>
-          {"Loading ..."}
-        </ArticleContentTitle>
-      </ArticleContent>
+        <ArticleContentTitle>{"Loading ..."}</ArticleContentTitle>
     </ArticleContainer>
   );
 };

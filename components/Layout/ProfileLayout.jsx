@@ -8,6 +8,32 @@ import LoadingContent from "@/components/Layout/LoadingContent";
 
 import { mediaMobileMixin } from "@/styles/utils/device";
 
+const ProfileLayoutSidebar = styled(Sidebar)`
+  ${mediaMobileMixin.L(`
+      grid-row: 1;
+
+      width: 100%;
+      grid-column: 1;
+  `)}
+`;
+
+const ProfileLayoutMain = styled(Main)`
+  ${mediaMobileMixin.L(`
+      grid-row: 2;
+
+      width: 100%;
+      grid-column: 1;
+
+      margin-top: 120px;
+  `)}
+`;
+
+const ProfileLayoutContentWrapper = styled.div`
+  ${mediaMobileMixin.L(`
+      margin-top: -120px;
+  `)}
+`;
+
 const ProfileCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -76,7 +102,7 @@ const ProfileLayout = ({ children, profile = {}, isLoading, ...props }) => {
 
   return (
     <BasicLayout {...props}>
-      <Sidebar className="main_block">
+      <ProfileLayoutSidebar>
         <ProfileCard>
           <AvatarImage
             width="260"
@@ -93,10 +119,14 @@ const ProfileLayout = ({ children, profile = {}, isLoading, ...props }) => {
             </Link>
           </ProfileCardTitle>
         </ProfileCard>
-      </Sidebar>
-      <Main className="main_block">
-        {isLoading ? <LoadingContent /> : children}
-      </Main>
+      </ProfileLayoutSidebar>
+      <ProfileLayoutMain>
+        {isLoading ? (
+          <LoadingContent />
+        ) : (
+          <ProfileLayoutContentWrapper>{children}</ProfileLayoutContentWrapper>
+        )}
+      </ProfileLayoutMain>
     </BasicLayout>
   );
 };

@@ -5,7 +5,7 @@ import Footer from "./Footer";
 
 import { mediaDesktopMixin, mediaMobileMixin } from "@/styles/utils/device";
 
-const Container = styled.div`
+const LayoutContainer = styled.div`
   position: relative;
   height: 100vh;
 
@@ -16,16 +16,18 @@ const Container = styled.div`
   flex-direction: column;
 
   .main {
-    min-height: 84%;
+    height: 84%;
   }
   .footer {
-    min-height: 64px;
+    height: 16%;
   }
 `;
 const Main = styled.main`
   max-width: 1280px;
+  width: 100%;
   height: auto;
 
+  margin-top: 160px;
   margin-right: auto;
   margin-left: auto;
 
@@ -36,6 +38,10 @@ const Main = styled.main`
 
   ${mediaDesktopMixin.L(`
     max-width: 1440px;
+  `)}
+
+  ${mediaMobileMixin.L(`
+    margin-top: 64px;
   `)}
 `;
 
@@ -54,13 +60,13 @@ const MainContainer = styled.div`
 
 const EmptyLayout = ({ children, title }) => {
   return (
-    <Container>
+    <LayoutContainer>
       <Head title={title} />
       <Main className="main">
         <MainContainer>{children}</MainContainer>
       </Main>
-      <Footer className="footer"/>
-    </Container>
+      <Footer className="footer" />
+    </LayoutContainer>
   );
 };
 
