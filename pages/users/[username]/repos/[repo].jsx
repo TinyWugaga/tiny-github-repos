@@ -13,7 +13,7 @@ import LoadingContent from "@/components/Layout/LoadingContent";
 import EmptyRepoArticle from "@/components/RepoArticle/EmptyRepoArticle";
 import RepoArticle from "@/components/RepoArticle";
 
-function Repo({ title, username, repo, error, ...props }) {
+function Repo({ title, username, profile, repo, error, ...props }) {
   const isProfileError = getErrorLayout(error);
   const router = useRouter();
 
@@ -91,7 +91,6 @@ export async function getStaticProps({ params }) {
     return {
       props: {
         username,
-        repo,
         error: getError
       }
     };
