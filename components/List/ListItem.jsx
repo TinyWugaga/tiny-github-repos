@@ -31,6 +31,7 @@ const ListItemBlockRight = styled(ListItemBlock)`
 
   display: flex;
   justify-content: space-around;
+  align-items: center;
   flex-direction: column;
 `;
 

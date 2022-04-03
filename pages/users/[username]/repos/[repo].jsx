@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
-import useSWR from "swr";
+
+import handleError, { getErrorLayout } from "@/lib/api/handleError";
+import { fetchProfile } from "@/lib/hook/useUserProfile";
 
 import useUserProfile from "@/lib/hook/useUserProfile";
 import useUserRepoArticle from "@/lib/hook/useUserRepoArticle";
@@ -11,20 +13,20 @@ import LoadingContent from "@/components/Layout/LoadingContent";
 import EmptyRepoArticle from "@/components/RepoArticle/EmptyRepoArticle";
 import RepoArticle from "@/components/RepoArticle";
 
-function Repo({ title, username, repo, ...props }) {
+function Repo({ title, username, repo, errorName, ...props }) {
+  const isProfileError = getErrorLayout(errorName);
   const router = useRouter();
 
-  const { profile, isError: isProfileError } = useUserProfile(username);
   const {
     article,
     isEmpty,
     isLoading,
-    isError: isRepoError
+    isError: repoError
   } = useUserRepoArticle(username, repo);
 
-  const ErrorHandler = useMemo(() => isProfileError || isRepoError, [
+  const ErrorHandler = useMemo(() => isProfileError || repoError, [
     isProfileError,
-    isRepoError
+    repoError
   ]);
 
   if (ErrorHandler) return ErrorHandler;
@@ -71,12 +73,30 @@ export async function getStaticPaths() {
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
-  return {
-    props: {
-      username: params.username,
-      repo: params.repo
-    }
-  };
+  const { username, repo } = params;
+
+  try {
+    const { profile, error } = await fetchProfile(username);
+    const errorName = error && error.name
+
+    return {
+      props: {
+        username,
+        repo,
+        profile,
+        errorName
+      }
+    };
+  } catch (error) {
+    const getError = handleError(error)
+    return {
+      props: {
+        username,
+        repo,
+        errorName: getError.name
+      }
+    };
+  }
 }
 
 export default Repo;

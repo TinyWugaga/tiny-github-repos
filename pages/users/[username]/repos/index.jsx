@@ -1,7 +1,9 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 
-import useUserProfile from "@/lib/hook/useUserProfile";
+import handleError, { getErrorLayout } from "@/lib/api/handleError";
+import { fetchProfile } from "@/lib/hook/useUserProfile";
+
 import useUserRepoList from "@/lib/hook/useUserRepoList";
 import useWindowScroll from "@/lib/hook/useWindowScroll";
 
@@ -10,28 +12,25 @@ import LoadingContent from "@/components/Layout/LoadingContent";
 import EmptyRepoArticle from "@/components/RepoArticle/EmptyRepoArticle";
 import List from "@/components/List";
 
-function Repos({ title, username, ...props }) {
+function Repos({ title, username, profile, errorName, ...props }) {
+  const isProfileError = getErrorLayout(errorName);
   const router = useRouter();
 
   const {
     repoList,
     handleLoadMoreRepo,
     isEmpty,
-    isError: isRepoListError,
+    isError: repoListError,
     isReachingEnd,
     isRefreshing,
     isLoadingInitialData
   } = useUserRepoList(username);
 
-  const { profile, isError: isProfileError } = useUserProfile(username);
+  useWindowScroll(() => handleLoadMoreRepo());
 
-  useWindowScroll(
-    () => handleLoadMoreRepo()
-  );
-
-  const ErrorHandler = useMemo(() => isProfileError || isRepoListError, [
+  const ErrorHandler = useMemo(() => isProfileError || repoListError, [
     isProfileError,
-    isRepoListError
+    repoListError
   ]);
 
   if (ErrorHandler) return ErrorHandler;
@@ -41,7 +40,12 @@ function Repos({ title, username, ...props }) {
       <LoadingContent />
     </EmptyLayout>
   ) : (
-    <ProfileLayout title={title} profile={profile} isLoading={isLoadingInitialData} {...props}>
+    <ProfileLayout
+      title={title}
+      profile={profile}
+      isLoading={isLoadingInitialData}
+      {...props}
+    >
       {isEmpty ? <EmptyRepoArticle /> : <List data={repoList} />}
     </ProfileLayout>
   );
@@ -63,11 +67,28 @@ export async function getStaticPaths() {
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
-  return {
-    props: {
-      username: params.username
-    }
-  };
+  const { username } = params;
+
+  try {
+    const { profile, error } = await fetchProfile(username);
+    const errorName = error && error.name
+
+    return {
+      props: {
+        username,
+        profile,
+        errorName
+      }
+    };
+  } catch (error) {
+    const getError = handleError(error)
+    return {
+      props: {
+        username,
+        errorName: getError.name
+      }
+    };
+  }
 }
 
 export default Repos;
