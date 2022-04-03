@@ -81,7 +81,7 @@ export async function getStaticProps({ params }) {
       }
     };
   } catch (error) {
-    const getError = handleError(error)
+    const getError = handleError(error.message)
     return {
       props: {
         username,
