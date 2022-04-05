@@ -78,7 +78,7 @@ const UserSearchBar = styled(SearchBar)`
   `)}
 `
 
-function Users({ title = '' }) {
+function Users({ title }) {
   const { searchUserRepo } = useSearchUser()
 
   return (

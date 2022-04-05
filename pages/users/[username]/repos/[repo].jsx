@@ -31,13 +31,14 @@ function Repo({ title, username, profile, repo, error, ...props }) {
 
   if (ErrorHandler) return ErrorHandler;
 
+  const pageTitle = `${title} - User Repo: ${repo}`
   return router.isFallback ? (
-    <EmptyLayout title={title}>
+    <EmptyLayout title={pageTitle}>
       <LoadingContent />
     </EmptyLayout>
   ) : (
     <ProfileLayout
-      title={title}
+      title={pageTitle}
       profile={profile}
       isLoading={isLoading}
       {...props}
